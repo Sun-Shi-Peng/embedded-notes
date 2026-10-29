@@ -1,0 +1,49 @@
+name: Sync Feishu Wiki to Markdown
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install feishu-pages
+        run: |
+          npm init -y
+          npm install feishu-pages
+
+      - name: Export Feishu wiki to Markdown
+        run: npx feishu-pages
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_SPACE_ID: ${{ secrets.FEISHU_SPACE_ID }}
+          OUTPUT_DIR: dist
+
+      - name: Commit and push if changed
+        run: |
+          git checkout -B "${GITHUB_REF_NAME}"
+          git add dist
+          if git diff --cached --quiet; then
+            echo "::notice::飞书知识库没有内容变化，跳过提交"
+            exit 0
+          fi
+          git config user.name "feishu-sync-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: 同步飞书知识库 $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push origin "${GITHUB_REF_NAME}"
