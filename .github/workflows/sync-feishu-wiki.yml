@@ -17,18 +17,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install feishu-pages
-        run: |
-          npm init -y
-          npm install feishu-pages
-
-      - name: Export Feishu wiki to Markdown
-        run: npx feishu-pages
+      - name: Run sync script (docs + sheets + whiteboards)
+        run: python3 sync_feishu.py
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
