@@ -66,7 +66,7 @@ img_v3_02172_f4d5226e-29e9-479d-b857-b9e98552bf7g.jpg
 
 GPIO  output level：设置该引脚的初始电平值，将是输出寄存器的初始值
 GPIO mode：常见 Output Push Pull（推挽输出）或者开漏输出
-GPIO Pull-ip/Pull-down：表示该引脚进行上拉/下拉
+GPIO Pull-up/Pull-down：表示该引脚进行上拉/下拉
 Maximum output speed：设置最大输出速度（选择 Low 即可）
 User Label：用户标签
 
@@ -74,6 +74,9 @@ User Label：用户标签
 电平变化是需要时间的，不是陡峭的变化而是有倾斜角度
 极端情况下会变成“尖峰”形状，导致抓取信息失败，所以速度不能无限提升
 设置速度等级，是满足正确输出信息前提下，通过不同等级来满足不同应用场景
+生成的配置代码如下
+image.png
+
 3.2 开启调试
 开发板的预留仿真器调试接口是 SWD（Serial Wire Debug）
 img_v3_02172_3bc8ddd1-4b8c-4039-9add-85922d9013bg.jpg
