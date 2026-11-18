@@ -130,7 +130,6 @@ S 和 D 是要接 VDD 或 GND，G 要接一个控制电路来控制开关的打�
 被控制电流从 Drain 流向 Source，就是 N 型 MOS 管；negative 消极的，反向的，D->S
 P-MOS 管导通过程：
 
-
 N-MOS 管导通过程：
 
 
